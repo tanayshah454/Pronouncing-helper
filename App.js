@@ -3,13 +3,15 @@ import { Text, View, StyleSheet, TextInput,Button,Image,TouchableOpacity } from 
 import { Header } from 'react-native-elements'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import db from './locoldb'
+import Phonums from './phonums'
 
 export default class App extends React.Component {
   constructor() {
     super()
     this.state = {
       word: '',
-      chunks: []
+      chunks: [],
+      phonums:[]
     }
   }
   componentDidMount(){
@@ -34,19 +36,16 @@ export default class App extends React.Component {
           <View style={styles.goButton}>
           <Button title='show' color="#d7e419" onPress={()=>{
             this.setState({
-              chunks:db[this.state.word].chunks
+              chunks:db[this.state.word].chunks,
+              phonums:db[this.state.word].phones
             })
             console.log(this.state.chunks)
           }}/>
           </View>
           <View>
-            {this.state.chunks.map((item)=>{
+            {this.state.chunks.map((item,index)=>{
               return(
-                <TouchableOpacity style={styles.chunkButton}>
-          <Text style={styles.displayText}>
-          {item}
-          </Text>
-          </TouchableOpacity>
+             <Phonums chunk={this.state.chunks[index]} phonums={this.state.phonums[index]}/>
               )
             })}
           </View>
